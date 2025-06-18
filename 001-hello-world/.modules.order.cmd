@@ -1,0 +1,1 @@
+savedcmd_/home/ronin/LDD1/custom_drivers/001-hello-world/modules.order := {   echo /home/ronin/LDD1/custom_drivers/001-hello-world/main.o; :; } > /home/ronin/LDD1/custom_drivers/001-hello-world/modules.order

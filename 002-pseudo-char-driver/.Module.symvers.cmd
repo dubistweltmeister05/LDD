@@ -1,0 +1,1 @@
+savedcmd_/home/ronin/LDD1/custom_drivers/002-pseudo-char-driver/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/ronin/LDD1/custom_drivers/002-pseudo-char-driver/Module.symvers -T /home/ronin/LDD1/custom_drivers/002-pseudo-char-driver/modules.order -i Module.symvers -e 

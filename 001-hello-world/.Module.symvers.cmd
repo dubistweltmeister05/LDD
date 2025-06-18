@@ -1,0 +1,1 @@
+savedcmd_/home/ronin/LDD1/custom_drivers/001-hello-world/Module.symvers :=  scripts/mod/modpost -M -m -a      -o /home/ronin/LDD1/custom_drivers/001-hello-world/Module.symvers -T /home/ronin/LDD1/custom_drivers/001-hello-world/modules.order -i Module.symvers -e 

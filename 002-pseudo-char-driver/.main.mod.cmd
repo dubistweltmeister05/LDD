@@ -1,0 +1,1 @@
+savedcmd_/home/ronin/LDD1/custom_drivers/002-pseudo-char-driver/main.mod := printf '%s\n'   main.o | awk '!x[$$0]++ { print("/home/ronin/LDD1/custom_drivers/002-pseudo-char-driver/"$$0) }' > /home/ronin/LDD1/custom_drivers/002-pseudo-char-driver/main.mod

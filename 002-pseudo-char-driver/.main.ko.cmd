@@ -1,1 +1,0 @@
-savedcmd_/home/ronin/LDD1/custom_drivers/002-pseudo-char-driver/main.ko := ld -r -m elf_x86_64 -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T scripts/module.lds -o /home/ronin/LDD1/custom_drivers/002-pseudo-char-driver/main.ko /home/ronin/LDD1/custom_drivers/002-pseudo-char-driver/main.o /home/ronin/LDD1/custom_drivers/002-pseudo-char-driver/main.mod.o

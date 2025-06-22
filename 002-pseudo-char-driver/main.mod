@@ -1,1 +1,0 @@
-/home/ronin/LDD1/custom_drivers/002-pseudo-char-driver/main.o

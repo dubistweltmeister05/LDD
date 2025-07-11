@@ -1,65 +1,106 @@
-#include <linux/module.h>
-#include <linux/fs.h>
-#include <linux/cdev.h>
-#include <linux/device.h>
-#include <linux/kdev_t.h>
-#include <linux/uaccess.h>
-#include <linux/platform_device.h>
+#include<linux/module.h>
+#include<linux/platform_device.h>
+
 #include "platform.h"
 
 #undef pr_fmt
-#define pr_fmt(fmt) "%s : " fmt, __func__
+#define pr_fmt(fmt) "%s : " fmt,__func__
 
-//Create 2 platform data
-struct pcdev_platform_data pcdev_pdata[2]= {
-    [0]={.size = 512, .perm = RDWR, .sr_no = "PCDEV_ABC"},
-    [1] = {.size = 2048, .perm  = RDWR, .sr_no = "PCDEV_XYZ"},
-}; 
-void pcdev_release(struct device *dev){
-    pr_info("Device Released\n");
+void pcdev_release(struct device *dev)
+{
+	pr_info("Device released \n");
 }
 
-// Create 2 platform devices
 
-struct platform_device platform_pcdev_1 = {
-    .name = "pseudo-char-device",
-    .id = 0,
-    .dev = {
-        .platform_data = &pcdev_pdata[0],
-        .release = pcdev_release
-    } 
+/*1. create platform data */
+struct pcdev_platform_data  pcdev_pdata[] = {
+	[0] = {.size = 512, .perm = RDWR,   .serial_number = "PCDEVA1"},
+	[1] = {.size = 2048,.perm = RDWR,   .serial_number = "PCDEVB2"},
+	[2] = {.size = 256, .perm = RDONLY, .serial_number = "PCDEVC3"},
+	[3] = {.size = 64,  .perm = WRONLY, .serial_number = "PCDEVS4"}
 };
 
+/*2. create n platform devices */ 
+
+struct platform_device platform_pcdev_1 = {
+	.name = "pcdev-A1x",
+	.id = 0,
+	.dev = {
+		.platform_data = &pcdev_pdata[0],
+		.release = pcdev_release
+	}
+};
+
+
 struct platform_device platform_pcdev_2 = {
-    .name = "pseudo-char-device",
-    .id = 1,
-    .dev = {
-        .platform_data = &pcdev_pdata[1],
-        .release = pcdev_release
-    }
+	.name = "pcdev-B1x",
+	.id = 1,
+	.dev = {
+		.platform_data = &pcdev_pdata[1],
+		.release = pcdev_release
+	}
+};
+
+
+struct platform_device platform_pcdev_3 = {
+	.name = "pcdev-C1x",
+	.id = 2,
+	.dev = {
+		.platform_data = &pcdev_pdata[2],
+		.release = pcdev_release
+	}
+};
+
+
+struct platform_device platform_pcdev_4 = {
+	.name = "pcdev-D1x",
+	.id = 3,
+	.dev = {
+		.platform_data = &pcdev_pdata[3],
+		.release = pcdev_release
+	}
+};
+
+
+struct platform_device *platform_pcdevs[] = 
+{
+	&platform_pcdev_1,
+	&platform_pcdev_2,
+	&platform_pcdev_3,
+	&platform_pcdev_4
 };
 
 static int __init pcdev_platform_init(void)
 {
-    // register the device
-    platform_device_register(&platform_pcdev_1);
-    platform_device_register(&platform_pcdev_2);
+	/* register n platform devices */
 
-    pr_info("Module Inserted \n");
-    return 0;
+	//platform_device_register(&platform_pcdev_1);
+	//platform_device_register(&platform_pcdev_2);
+	
+	platform_add_devices(platform_pcdevs,ARRAY_SIZE(platform_pcdevs) );
+
+	pr_info("Device setup module loaded \n");
+
+	return 0;
 }
 
-void __exit pcdev_platform_exit(void)
-{
-    platform_device_unregister(&platform_pcdev_1);
-    platform_device_unregister(&platform_pcdev_2);
 
-    pr_info("DEvice Setup module removed\n");
-};
+static void __exit pcdev_platform_exit(void)
+{
+
+	platform_device_unregister(&platform_pcdev_1);
+	platform_device_unregister(&platform_pcdev_2);
+	platform_device_unregister(&platform_pcdev_3);
+	platform_device_unregister(&platform_pcdev_4);
+	pr_info("Device setup module unloaded \n");
+
+
+}
 
 module_init(pcdev_platform_init);
 module_exit(pcdev_platform_exit);
 
+
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Kshitij Neeraj Vaze");
-MODULE_DESCRIPTION("A module to register platform devices");
+MODULE_DESCRIPTION("Module which registers n platform devices ");
+MODULE_AUTHOR("Kshitij Vaze");

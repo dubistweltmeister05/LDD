@@ -4,6 +4,7 @@
 #include <linux/device.h>
 #include <linux/kdev_t.h>
 #include <linux/uaccess.h>
+#include <linux/types.h>
 
 #undef pr_fmt
 #define pr_fmt(fmt) "%s : " fmt, __func__
